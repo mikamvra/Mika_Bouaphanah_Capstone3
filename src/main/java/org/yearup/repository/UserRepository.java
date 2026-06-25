@@ -7,9 +7,7 @@ import org.yearup.models.User;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer>
 {
-    User getByUsername(String username);
+    User findByUsername(String username);
 
     boolean existsByUsername(String username);
-
-    User findByUsername(String username);
 }

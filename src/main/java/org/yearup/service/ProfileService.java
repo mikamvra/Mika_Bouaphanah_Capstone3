@@ -1,26 +1,41 @@
 package org.yearup.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yearup.models.Profile;
 import org.yearup.repository.ProfileRepository;
 
 @Service
-public class ProfileService {
-
+public class ProfileService
+{
     private final ProfileRepository profileRepository;
-
-    @Autowired
-    public ProfileService(ProfileRepository profileRepository) {
+    public ProfileService(ProfileRepository profileRepository)
+    {
         this.profileRepository = profileRepository;
     }
 
-    public Profile getByUserId(int userId) {
+    public Profile create(Profile profile)
+    {
+        return profileRepository.save(profile);
+    }
+
+    public Profile getByUserId(int userId)
+    {
         return profileRepository.findById(userId).orElse(null);
     }
 
-    public void update(int userId, Profile profile) {
-        profile.setUserId(userId);
-        profileRepository.save(profile);
+    public Profile update(int userId, Profile profile)
+    {
+        Profile existing = profileRepository.findById(userId).orElseThrow();
+
+        existing.setFirstName(profile.getFirstName());
+        existing.setLastName(profile.getLastName());
+        existing.setPhone(profile.getPhone());
+        existing.setEmail(profile.getEmail());
+        existing.setAddress(profile.getAddress());
+        existing.setCity(profile.getCity());
+        existing.setState(profile.getState());
+        existing.setZip(profile.getZip());
+
+        return profileRepository.save(existing);
     }
 }
