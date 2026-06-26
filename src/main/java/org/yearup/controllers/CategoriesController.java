@@ -20,6 +20,7 @@ import java.util.Optional;
 // add annotation to allow cross site origin requests
 @RestController
 @RequestMapping("/categories")
+@CrossOrigin
 public class CategoriesController {
 
     private CategoryService categoryService;

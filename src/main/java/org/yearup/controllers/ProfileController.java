@@ -14,7 +14,6 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/profile")
 @CrossOrigin
-@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class ProfileController
 {
     private final ProfileService profileService;
@@ -27,9 +26,10 @@ public class ProfileController
     }
 
     @GetMapping
-    public Profile getProfile(Principal principal)
-    {
+
+    public Profile getProfile(Principal principal) {
         String username = principal.getName();
+
         User user = userService.getByUserName(username);
 
         Profile profile = profileService.getByUserId(user.getId());
